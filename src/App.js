@@ -1,24 +1,24 @@
-import logo from './logo.svg';
+import Auth from './components/Auth';
+import { AuthProvider } from './context/authContext';
+import { QueryClientProvider, QueryClient } from 'react-query';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+import Chats from './components/Chats';
 import './App.css';
 
 function App() {
+  const queryClient = new QueryClient();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <Routes>
+            <Route path="/" element={<Auth />} />
+            <Route path="/chats" element={<Chats />} />
+          </Routes>
+        </AuthProvider>
+      </QueryClientProvider>
+    </Router>
   );
 }
 
